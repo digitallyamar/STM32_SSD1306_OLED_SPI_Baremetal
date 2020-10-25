@@ -1,3 +1,6 @@
+#ifndef __STM32F4_H__
+#define __STM32F4_H__
+
 
 #define AHB3_BASE               0xA0000000
 #define AHB2_BASE               0x50000000
@@ -66,37 +69,37 @@
 #define CRC_BASE                (AHB1_BASE + 0x3000)
 
 /* GPIOK */
-#define GPIOK_BASE              (AHB1_BASE + 0x2800)
+#define GPIOK                   (AHB1_BASE + 0x2800)
 
 /* GPIOJ */
-#define GPIOJ_BASE              (AHB1_BASE + 0x2400)
+#define GPIOJ                   (AHB1_BASE + 0x2400)
 
 /* GPIOI */
-#define GPIOI_BASE              (AHB1_BASE + 0x2000)
+#define GPIOI                   (AHB1_BASE + 0x2000)
 
 /* GPIOH */
-#define GPIOH_BASE              (AHB1_BASE + 0x1C00)
+#define GPIOH                   (AHB1_BASE + 0x1C00)
 
 /* GPIOG */
-#define GPIOG_BASE              (AHB1_BASE + 0x1800)
+#define GPIOG                   (AHB1_BASE + 0x1800)
 
 /* GPIOF */
-#define GPIOF_BASE              (AHB1_BASE + 0x1400)
+#define GPIOF                   (AHB1_BASE + 0x1400)
 
 /* GPIOE */
-#define GPIOE_BASE              (AHB1_BASE + 0x1000)
+#define GPIOE                   (AHB1_BASE + 0x1000)
 
 /* GPIOD */
-#define GPIOD_BASE              (AHB1_BASE + 0x0C00)
+#define GPIOD                   (AHB1_BASE + 0x0C00)
 
 /* GPIOC */
-#define GPIOC_BASE              (AHB1_BASE + 0x0800)
+#define GPIOC                   (AHB1_BASE + 0x0800)
 
 /* GPIOB */
-#define GPIOB_BASE              (AHB1_BASE + 0x0400)
+#define GPIOB                   (AHB1_BASE + 0x0400)
 
 /* GPIOA */
-#define GPIOA_BASE              (AHB1_BASE)
+#define GPIOA                   (AHB1_BASE)
 
 /* LCD-TFT */
 #define LCD_BASE                (APB2_BASE + 0x6800)
@@ -224,3 +227,10 @@
 #define TIM4_BASE               (APB1_BASE + 0x800)
 #define TIM3_BASE               (APB1_BASE + 0x400)
 #define TIM2_BASE               (APB1_BASE)
+
+
+void PUT32( unsigned int dst_reg, unsigned int val);
+unsigned int GET32( unsigned int );
+unsigned int DELAY ( unsigned int );
+
+#endif      //__STM32F4_H__
