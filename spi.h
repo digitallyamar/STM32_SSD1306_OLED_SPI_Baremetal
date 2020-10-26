@@ -24,6 +24,8 @@
 #define SPI_CR1_MSTR_CLR                ~(1 << 2)
 #define SPI_CR1_SPE_SET                 (1 << 6)
 #define SPI_CR1_SPE_CLR                 ~(1 << 6)
+#define SPI_CR1_LSBFIRST                (1 << 7)
+#define SPI_CR1_MSBFIRST                ~(1 << 7)
 #define SPI_CR1_CRCNEXT_SET             (1 << 12)
 #define SPI_CR1_CRCNEXT_CLR             ~(1 << 12)
 #define SPI_CR1_CRCEN_SET               (1 << 13)

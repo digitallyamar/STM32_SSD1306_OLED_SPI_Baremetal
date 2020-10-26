@@ -66,6 +66,22 @@ void spi_spe_clr(unsigned int spi_num) {
     PUT32(SPI_CR1(spi_num), spi_cr1_val);    
 }
 
+// LSBFirst - Set LSBFirst bit to send LSB first (LSBFirst)
+void spi_lsbfirst_set(unsigned int spi_num) {
+    unsigned int spi_cr1_val = GET32(SPI_CR1(spi_num));
+
+    spi_cr1_val |= SPI_CR1_LSBFIRST;
+    PUT32(SPI_CR1(spi_num), spi_cr1_val);    
+}
+
+// LSBFirst - Clear LSBFirst bit to send MSB first (LSBFirst)
+void spi_lsbfirst_clr(unsigned int spi_num) {
+    unsigned int spi_cr1_val = GET32(SPI_CR1(spi_num));
+
+    spi_cr1_val &= SPI_CR1_MSBFIRST;
+    PUT32(SPI_CR1(spi_num), spi_cr1_val);    
+}
+
 // Set baud rate
 void spi_baud_rate_set(unsigned int spi_num, unsigned int spi_br_div) {
     unsigned int spi_cr1_val = GET32(SPI_CR1(spi_num));

@@ -16,6 +16,34 @@
                         -------------
 ************************************************************************/
 
+
+unsigned char _oledbuffer[OLED_BUFFER_SIZE];
+
+void oled_clear(void) {
+    oled_dc_select(OLED_SELECT_DATA);
+
+    for (int i=0; i < OLED_BUFFER_SIZE; i++) {
+        _oledbuffer[i] = 0x0;
+        spi_master_send_half_duplex(SPI1, _oledbuffer[i]);
+    }
+}
+
+void oled_draw(unsigned char new_img[]) {
+    oled_dc_select(OLED_SELECT_DATA);
+
+    for (int i=0; i < OLED_BUFFER_SIZE; i++) {
+        _oledbuffer[i] = new_img[i];
+    }
+}
+
+void oled_refresh(void) {
+    oled_dc_select(OLED_SELECT_DATA);
+
+    for (int i=0; i < OLED_BUFFER_SIZE; i++) {
+        spi_master_send_half_duplex(SPI1, _oledbuffer[i]);
+    }
+}
+
 void oled_chip_select(void) {
     // We neeed to pull PA4 low
     unsigned int gpioa_odr_val = GET32(GPIO_0DR(GPIOA));
@@ -39,7 +67,7 @@ void oled_dc_select(int selection) {
         gpiob_odr_val &= OLED_SELECT_CMD;
     } else {
         // We need to pull PB0 high
-        gpiob_odr_val &= OLED_SELECT_DATA;         
+        gpiob_odr_val |= OLED_SELECT_DATA;         
     }
 
     PUT32(GPIO_0DR(GPIOB), gpiob_odr_val);

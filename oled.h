@@ -10,7 +10,9 @@
 #define RESET_PIN_DISABLE                   (1 << 1)
 #define RESET_PIN_ENABLE                    ~(1 << 1)
 
-
+#define OLED_WIDTH                          128
+#define OLED_HEIGHT                         64
+#define OLED_BUFFER_SIZE                    (OLED_WIDTH * OLED_HEIGHT) / 8
 
 // OLED Init commands
 #define OLED_SETCONTRAST                    0x81
@@ -40,5 +42,8 @@ void oled_chip_select(void);
 void oled_chip_deselect(void);
 void oled_reset(void);
 void oled_init(void);
+void oled_clear(void);
+void oled_draw(unsigned char new_img[]);
+void oled_refresh(void);
 
 #endif
