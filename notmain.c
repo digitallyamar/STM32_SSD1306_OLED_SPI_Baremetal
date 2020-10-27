@@ -95,6 +95,7 @@ int notmain(void) {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
+//#if 0
     static unsigned char digit1[1024] = 
     {   // 'digit1', 128x64px
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
@@ -297,7 +298,7 @@ int notmain(void) {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
     };
-    
+//#endif    
     /********************************************************************** 
      * Step 1: We will use HSI as the initial clock src until PPL is ready. 
     **********************************************************************/
@@ -391,30 +392,44 @@ int notmain(void) {
 
     // Start sending OLED Initialization commands
     oled_init();
+//#if 0
+        oled_clear();
+        oled_draw(digit3);
+        oled_refresh();
 
-    //DELAY(9999);
+        DELAY(9999999);
 
-    oled_clear();
-    oled_draw(digit3);
-    oled_refresh();
+        //oled_scroll_left();
 
-    DELAY(9999999);
+        oled_clear();
+        oled_draw(digit2);
+        oled_refresh();
 
-    oled_clear();
-    oled_draw(digit2);
-    oled_refresh();
+        DELAY(9999999);
 
-    DELAY(9999999);
+        //oled_scroll_left();
 
-    oled_clear();
-    oled_draw(digit1);
-    oled_refresh();
+        oled_clear();
+        oled_draw(digit1);
+        oled_refresh();
 
-    DELAY(9999999);
+        DELAY(9999999);
 
-    oled_clear();
-    oled_draw(digit0);
-    oled_refresh();
+        //oled_scroll_left();
+//#endif
+
+while (1) {
+        oled_clear();
+        oled_draw(digit0);
+        oled_refresh();
+
+        oled_scroll_down();
+        oled_scroll_activate();
+        DELAY(19999999);
+
+        oled_scroll_deactivate();        
+        DELAY(19999999);
+    }
 
    return 0; 
 }

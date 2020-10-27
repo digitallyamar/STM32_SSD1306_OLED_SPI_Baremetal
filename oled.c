@@ -19,6 +19,168 @@
 
 unsigned char _oledbuffer[OLED_BUFFER_SIZE];
 
+void oled_flip_up(void) {
+    int scroll_step_count = 0x0;
+
+    oled_dc_select(OLED_SELECT_CMD);
+
+    while(scroll_step_count <= 0x3F) {
+        scroll_step_count++;
+        spi_master_send_half_duplex(SPI1, OLED_SETSTARTLINE + scroll_step_count);
+
+        DELAY(9999);
+    }
+}
+
+void oled_flip_down(void) {
+    int scroll_step_count = 0x3F;
+
+    oled_dc_select(OLED_SELECT_CMD);
+
+    while(scroll_step_count) {
+        spi_master_send_half_duplex(SPI1, OLED_SETSTARTLINE + scroll_step_count);
+        scroll_step_count--;
+
+        DELAY(9999);
+    }
+}
+
+void oled_scroll_right(void) {
+
+    oled_dc_select(OLED_SELECT_CMD);
+    
+    //TODO: We are adding delays here as frequencies might
+    // not have been configured correctly. TBD later!
+
+    spi_master_send_half_duplex(SPI1, OLED_HORIZ_SCROLL_RIGHT);
+    DELAY(1000);
+    // Send Dummy Byte 0x00
+    spi_master_send_half_duplex(SPI1, 0x0);
+    DELAY(1000);
+    // Set start page address as PAGE 0
+    spi_master_send_half_duplex(SPI1, 0x0);    
+    DELAY(1000);
+    // Set time interal between each scroll step as 5 frames
+    spi_master_send_half_duplex(SPI1, 0x0);
+    DELAY(1000);
+    // Set end page address as PAGE 7
+    spi_master_send_half_duplex(SPI1, 0x7);
+    DELAY(1000);
+
+    // Dummy Byte
+    spi_master_send_half_duplex(SPI1, 0x0);
+    DELAY(1000);
+
+    // Dummy Byte
+    spi_master_send_half_duplex(SPI1, 0xFF);
+    DELAY(1000);
+}
+
+
+void oled_scroll_left(void) {
+
+    oled_dc_select(OLED_SELECT_CMD);
+    
+    //TODO: We are adding delays here as frequencies might
+    // not have been configured correctly. TBD later!
+
+    spi_master_send_half_duplex(SPI1, OLED_HORIZ_SCROLL_LEFT);
+    DELAY(1000);
+    // Send Dummy Byte 0x00
+    spi_master_send_half_duplex(SPI1, 0x0);
+    DELAY(1000);
+    // Set start page address as PAGE 0
+    spi_master_send_half_duplex(SPI1, 0x0);    
+    DELAY(1000);
+    // Set time interal between each scroll step as 5 frames
+    spi_master_send_half_duplex(SPI1, 0x0);
+    DELAY(1000);
+    // Set end page address as PAGE 7
+    spi_master_send_half_duplex(SPI1, 0x7);
+    DELAY(1000);
+
+    // Dummy Byte
+    spi_master_send_half_duplex(SPI1, 0x0);
+    DELAY(1000);
+
+    // Dummy Byte
+    spi_master_send_half_duplex(SPI1, 0xFF);
+    DELAY(1000);
+}
+
+void oled_scroll_up_right(void) {
+
+    oled_dc_select(OLED_SELECT_CMD);
+    
+    //TODO: We are adding delays here as frequencies might
+    // not have been configured correctly. TBD later!
+
+    spi_master_send_half_duplex(SPI1, OLED_VERT_SCROLL_RIGHT);
+    DELAY(1000);
+    // Send Dummy Byte 0x00
+    spi_master_send_half_duplex(SPI1, 0x0);
+    DELAY(1000);
+    // Set start page address as PAGE 0
+    spi_master_send_half_duplex(SPI1, 0x0);    
+    DELAY(1000);
+    // Set time interal between each scroll step as 5 frames
+    spi_master_send_half_duplex(SPI1, 0x7);
+    DELAY(1000);
+    // Set end page address as PAGE 7
+    spi_master_send_half_duplex(SPI1, 0x7);
+    DELAY(1000);
+
+    // Set vertical scrolling effect
+    spi_master_send_half_duplex(SPI1, OLED_VERT_SCROLL_OFFSET_63);
+    DELAY(1000);
+}
+
+void oled_scroll_up_left(void) {
+
+    oled_dc_select(OLED_SELECT_CMD);
+    
+    //TODO: We are adding delays here as frequencies might
+    // not have been configured correctly. TBD later!
+
+    spi_master_send_half_duplex(SPI1, OLED_VERT_SCROLL_LEFT);
+    DELAY(1000);
+    // Send Dummy Byte 0x00
+    spi_master_send_half_duplex(SPI1, 0x0);
+    DELAY(1000);
+    // Set start page address as PAGE 0
+    spi_master_send_half_duplex(SPI1, 0x0);    
+    DELAY(1000);
+    // Set time interal between each scroll step as 5 frames
+    spi_master_send_half_duplex(SPI1, 0x7);
+    DELAY(1000);
+    // Set end page address as PAGE 7
+    spi_master_send_half_duplex(SPI1, 0x7);
+    DELAY(1000);
+
+    // Set vertical scrolling effect
+    spi_master_send_half_duplex(SPI1, OLED_VERT_SCROLL_OFFSET_63);
+    DELAY(1000);
+}
+
+void oled_scroll_down(void) {
+    oled_scroll_up_right();
+    oled_scroll_up_left();
+}
+
+void oled_scroll_activate(void) {
+    oled_dc_select(OLED_SELECT_CMD);
+    // Activate scrolling
+    spi_master_send_half_duplex(SPI1, OLED_SCROLL_ACTIVATE);
+    DELAY(1000);
+}
+
+void oled_scroll_deactivate(void) {
+    oled_dc_select(OLED_SELECT_CMD);
+    // De-Activate scrolling
+    spi_master_send_half_duplex(SPI1, OLED_SCROLL_DEACTIVATE);
+    DELAY(1000);
+}
+
 void oled_clear(void) {
     oled_dc_select(OLED_SELECT_DATA);
 

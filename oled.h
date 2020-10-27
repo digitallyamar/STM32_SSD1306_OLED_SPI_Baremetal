@@ -37,6 +37,16 @@
 #define OLED_SEGREMAP                       0xA0
 #define OLED_CHARGEPUMP                     0x8D
 
+#define OLED_HORIZ_SCROLL_RIGHT             0x26
+#define OLED_HORIZ_SCROLL_LEFT              0x27
+#define OLED_VERT_SCROLL_RIGHT              0x29
+#define OLED_VERT_SCROLL_LEFT               0x2A
+#define OLED_VERT_SCROLL_OFFSET_1           0x01
+#define OLED_VERT_SCROLL_OFFSET_63          0x3F
+
+#define OLED_SCROLL_DEACTIVATE              0x2E
+#define OLED_SCROLL_ACTIVATE                0x2F
+
 void oled_dc_select(int selection);
 void oled_chip_select(void);
 void oled_chip_deselect(void);
@@ -45,5 +55,14 @@ void oled_init(void);
 void oled_clear(void);
 void oled_draw(unsigned char new_img[]);
 void oled_refresh(void);
+void oled_flip_up(void);
+void oled_flip_down(void);
+void oled_scroll_left(void);
+void oled_scroll_right(void);
+void oled_scroll_up_right(void);
+void oled_scroll_up_left(void);
+void oled_scroll_down(void);
+void oled_scroll_activate(void);
+void oled_scroll_deactivate(void);
 
 #endif
